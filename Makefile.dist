@@ -1,0 +1,35 @@
+COPT = -O3
+CC   = cc
+
+EXE     = tinkerpatch
+OFILES1 = tinkerpatch.o
+LFILES1 = bioplib/ReadPDB.o \
+          bioplib/OpenStdFiles.o \
+          bioplib/WritePDB.o \
+          bioplib/FindResidueSpec.o \
+          bioplib/FindResidue.o \
+          bioplib/fsscanf.o \
+          bioplib/chindex.o \
+          bioplib/BuildConect.o \
+          bioplib/StoreString.o \
+          bioplib/FreeStringList.o \
+          bioplib/padterm.o \
+          bioplib/IndexPDB.o \
+          bioplib/ParseRes.o \
+          bioplib/FindNextResidue.o
+
+
+
+all : $(EXE)
+
+tinkerpatch : $(OFILES1) $(LFILES1)
+	$(CC) $(COPT) -o $@ $(OFILES1) $(LFILES1) -lm
+
+.c.o :
+	$(CC) $(COPT) -o $@ -c $< 
+
+clean :
+	\rm -f $(OFILES1) $(LFILES1)
+
+distclean: clean
+	\rm -f $(EXE)
