@@ -1,7 +1,7 @@
 COPT = -O3
 CC   = cc
 
-EXE     = tinkerpatch
+EXE     = tinkerpatch fixoverlap
 OFILES1 = tinkerpatch.o
 LFILES1 = bioplib/ReadPDB.o \
           bioplib/OpenStdFiles.o \
@@ -18,18 +18,24 @@ LFILES1 = bioplib/ReadPDB.o \
           bioplib/ParseRes.o \
           bioplib/FindNextResidue.o
 
-
+OFILES2 = fixoverlap.o
+LFILES2 = bioplib/OpenStdFiles.o \
+          bioplib/GetWord.o \
+          bioplib/array2.o
 
 all : $(EXE)
 
 tinkerpatch : $(OFILES1) $(LFILES1)
 	$(CC) $(COPT) -o $@ $(OFILES1) $(LFILES1) -lm
 
+fixoverlap : $(OFILES2) $(LFILES2)
+	$(CC) $(COPT) -o $@ $(OFILES2) $(LFILES2) -lm
+
 .c.o :
 	$(CC) $(COPT) -o $@ -c $< 
 
 clean :
-	\rm -f $(OFILES1) $(LFILES1)
+	\rm -f $(OFILES1) $(LFILES1) $(OFILES2) $(LFILES2)
 
 distclean: clean
 	\rm -f $(EXE)
